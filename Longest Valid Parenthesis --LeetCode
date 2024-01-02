@@ -1,0 +1,37 @@
+QUESTION --> Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses 
+substring.
+
+Algorithm
+1. Push -1 into the stack.
+2. For opening parenthesis['('] push the index into the stack.
+3. For closing parenthesis, pop the index from the stack.
+4. If the stack is empty, push the current index into the stack.
+5. If the stack is not empty, calculate the length by [i-st.top()].
+6. Finally update the max length.
+
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> st;
+        st.push(-1);
+        int maxLen = 0;
+        for(int i=0; i<s.length(); i++){
+            char ch = s[i];
+            if(ch == '('){ //opening parenthesis
+                st.push(i);
+            }
+            else{ //closing parenthesis
+                st.pop();
+                if(!st.empty()){ //stack is not empty
+                   int length = i-st.top();
+                   maxLen = max(maxLen, length);
+                }
+                else{ //stack is empty
+                    st.push(i);
+                }
+            }
+        }
+        return maxLen;
+    }
+};
